@@ -3,6 +3,10 @@
 import torch.nn as nn
 from torchvision import models
 
+# Import custom models
+from .dinov2 import DINOv2
+from .siglip2 import SigLIP2
+
 def freeze(model):
     for p in model.parameters():
         p.requires_grad = False
@@ -27,6 +31,12 @@ def build_model(model_name, num_classes):
         freeze(model)
         in_features = model.heads.head.in_features
         model.heads.head = nn.Linear(in_features, num_classes)
+
+    elif model_name == "dinov2":
+        model = DINOv2(num_classes)
+
+    elif model_name == "siglip2":
+        model = SigLIP2(num_classes)
 
     else:
         raise ValueError(f"Unknown model: {model_name}")

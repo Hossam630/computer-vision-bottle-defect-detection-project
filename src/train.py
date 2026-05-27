@@ -1,6 +1,14 @@
 # src/train.py
 
 
+import os
+import sys
+
+# Ensure project root is on PYTHONPATH when running as: python src/train.py
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 from configs.train_config import CONFIG
 from src.dataloader.dataloaders import create_split_dataloaders
 from src.models.model_factory import build_model
